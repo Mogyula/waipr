@@ -2,14 +2,15 @@
     #include "myshit.tab.h"
     #include "proba.h"
     #include <stdlib.h>
+    #include <string.h>
     void yyerror(char *);
 %}
 
 %%
 
-[A-Za-z]+[A-Za-z0-9]*	{
-		yylval.strValue=yytext;
-		return IDENTIFIER;	
+[A-Za-z][A-Za-z0-9]*	{
+		yylval.strValue=strdup(yytext);
+		return IDENTIFIER;
 		}
 
 [0-9]+      {
@@ -17,9 +18,11 @@
                 return INTEGER;
             }
 
-[;=()-+*/\n]      return *yytext;
+[;=()-+*/\n]     {
+		return *yytext;
+		}
 
-[ \t\q]       ; /* skip whitespace */
+[ \t\q]+       ; /* skip whitespace */
 
 .           yyerror("invalid character");
 
