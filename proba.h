@@ -4,4 +4,5 @@ typedef struct{
 } Variable;
 
 void addVariable(int value, char* name);
+Variable* checkVariable(char* name);
 int getVariable(char* name);
