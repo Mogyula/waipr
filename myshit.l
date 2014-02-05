@@ -18,7 +18,7 @@
                 return INTEGER;
             }
 
-[;=()-+*/\n]     {
+[;=()"}""{"","-+*/\n]     {
 		return *yytext;
 		}
 

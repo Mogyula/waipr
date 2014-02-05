@@ -12,21 +12,34 @@
 }
 %token <iValue> INTEGER
 %token <strValue> IDENTIFIER
-%type <iValue> expression
+%type <iValue> expression function
 %nonassoc IDENTIFIER
 
 %%
 
 program:
-        program command '\n'			{ }
+        program commands '\n'		{ }
 	|	 
+	;
+
+commands:
+	command				{}
+	| commands command		{}
 	;
 	
 command:
 	';'				{ }
 	| IDENTIFIER ';'		{ printf("%d\n",getVariable($1)); }
 	| IDENTIFIER '=' expression ';'	{ addVariable($3,$1); }
+	| function			{ }
 	;
+
+function:
+	IDENTIFIER '(' identifier_list ')' '{' commands '}'	{printf("function");}
+
+identifier_list:
+	IDENTIFIER				{ }
+	| identifier_list ',' IDENTIFIER	{ }
 
 expression:
 	INTEGER				{$$=$1;}
